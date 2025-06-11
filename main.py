@@ -1,25 +1,23 @@
-import json
+import tkinter as tk
 
 from pymongo import MongoClient
 
+from presentation.ui import DatabaseGUI
 from sql_utils.database import Database
 from transformations.multiple_docs_transformation import MultipleDocsTransformation
 from transformations.one_document_transformation import OneDocTransformation
 from transformations.multiple_collections_transformation import MultipleCollectionsTransformation
+from transformations.runner import TransformationRunner
 
-db_path = "./sakila.db"
+# Mongo conn_str: mongodb://localhost:27017/
 
 if __name__ == "__main__":
-    a = input("1 - one document; 2 - one collection, many documents; 3 - many collections")
-    client = MongoClient("mongodb://localhost:27017/")
+    runner = TransformationRunner({
+        "To one document": OneDocTransformation(),
+        "To multiple documents": MultipleDocsTransformation(),
+        "To multiple collections": MultipleCollectionsTransformation(),
+    })
 
-    db = Database.from_file(db_path)
-    if a == '1':
-        trans_obj = OneDocTransformation()
-    elif a == '2':
-        trans_obj = MultipleDocsTransformation()
-    else:
-        trans_obj = MultipleCollectionsTransformation()
-    doc_db = trans_obj.transform(db)
-
-    doc_db.persist(client)
+    root = tk.Tk()
+    app = DatabaseGUI(root, runner)
+    root.mainloop()

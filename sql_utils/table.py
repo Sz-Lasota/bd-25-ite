@@ -28,13 +28,14 @@ class Table:
                 else col_width
             )
 
-        repr = [" | ".join(map(lambda it: f"{str(it):^{col_width}}", self.attributes))]
-        repr.append("-" * len(repr[-1]))
-        repr.extend(
+        repr_ = [" | ".join(map(lambda it: f"{str(it):^{col_width}}", self.attributes))]
+
+        repr_.append("-" * len(repr_[-1]))
+        repr_.extend(
             [
                 " | ".join(map(lambda it: f"{str(it):<{col_width}}", row.values()))
                 for row in self.entities
             ]
         )
 
-        return "\n".join(repr)
+        return "\n".join(repr_)
