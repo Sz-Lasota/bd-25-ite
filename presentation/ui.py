@@ -6,6 +6,12 @@ from transformations.runner import TransformationRunner
 
 
 class DatabaseGUI:
+    _HELP_TEXT = """When to use transformations:
+    1. One document transformation - puts whole database into single document. Suggested when fetching whole database frequently
+    2. Multiple documents transformation - puts each table into collection, where one document represent one entity. Suggested when fetching whole table frequently
+    3. Multiple collection transformation - puts each table into single document. Suggested when fetching single entities and relations between them are not important
+    4. Denormalization transformation - puts each entity into it's own document, denormalization is performed. Suggested when fetching single entities and relations between them are important
+    """
 
     def __init__(self, root, runner: TransformationRunner):
         self._runner = runner
@@ -40,13 +46,18 @@ class DatabaseGUI:
         self.transformation_modes = runner.modes()
         self.mode_selector = ttk.Combobox(main_frame, values=self.transformation_modes, state="readonly", width=47)
         self.mode_selector.grid(row=5, column=0, sticky=(tk.W, tk.E), pady=10)
-        self.mode_selector.current(0)  
+        self.mode_selector.current(0)
+
+        ttk.Button(main_frame, text="🛈", command=self._help).grid(row=5, column=1, sticky=tk.W, pady=5)
 
         
         ttk.Button(main_frame, text="Submit", command=self.submit).grid(row=7, column=0, pady=20)
 
         
         main_frame.columnconfigure(0, weight=1)
+
+    def _help(self) -> None:
+        messagebox.showinfo(title="Help", message=self._HELP_TEXT, )
 
     def browse_db(self):
         from tkinter import filedialog
