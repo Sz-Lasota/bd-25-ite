@@ -15,7 +15,7 @@ if __name__ == "__main__":
     runner = TransformationRunner({
         "To one document": OneDocTransformation(),
         "To multiple documents": MultipleDocsTransformation(),
-        "To multiple collections": MultipleCollectionsTransformation(),
+        "To multiple collections (with denormalization)": MultipleCollectionsTransformation(),
     })
 
     root = tk.Tk()

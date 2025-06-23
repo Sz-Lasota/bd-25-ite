@@ -9,8 +9,7 @@ class DatabaseGUI:
     _HELP_TEXT = """When to use transformations:
     1. One document transformation - puts whole database into single document. Suggested when fetching whole database frequently
     2. Multiple documents transformation - puts each table into collection, where one document represent one entity. Suggested when fetching whole table frequently
-    3. Multiple collection transformation - puts each table into single document. Suggested when fetching single entities and relations between them are not important
-    4. Denormalization transformation - puts each entity into it's own document, denormalization is performed. Suggested when fetching single entities and relations between them are important
+    3. Multiple collection transformation (denormalization) - puts each entity into it's own document, denormalization is performed. Suggested when fetching single entities and relations between them are important
     """
 
     def __init__(self, root, runner: TransformationRunner):
